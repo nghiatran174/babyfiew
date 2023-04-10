@@ -9,8 +9,32 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        TabView {
+            CalendarView()
+                .tabItem {
+                    Label("Lịch", systemImage: "calendar")
+                }
+            
+            ReportView()
+                .tabItem {
+                    Label("Báo cáo", systemImage: "chart.xyaxis.line")
+                }
+            
+            OrderView()
+                .tabItem {
+                    Label("Tạo đơn", systemImage: "plus.app")
+                }
+            
+            SearchView()
+                .tabItem {
+                    Label("Tìm kiếm", systemImage: "magnifyingglass")
+                }
+            
+            SettingView()
+                .tabItem {
+                    Label("Cài đặt", systemImage: "gearshape")
+                }
+        }
     }
 }
 
