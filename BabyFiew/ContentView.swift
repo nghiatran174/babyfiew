@@ -15,7 +15,7 @@ struct ContentView: View {
                     Label("Lịch", systemImage: "calendar")
                 }
             
-            ReportView()
+            ReportView(viewModel: ReportViewModel())
                 .tabItem {
                     Label("Báo cáo", systemImage: "chart.xyaxis.line")
                 }
