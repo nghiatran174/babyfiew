@@ -20,7 +20,7 @@ struct ContentView: View {
                     Label("Báo cáo", systemImage: "chart.xyaxis.line")
                 }
             
-            OrderView()
+            OrderView(viewModel: OrderViewModel())
                 .tabItem {
                     Label("Tạo đơn", systemImage: "plus.app")
                 }
@@ -35,6 +35,7 @@ struct ContentView: View {
                     Label("Cài đặt", systemImage: "gearshape")
                 }
         }
+        .edgesIgnoringSafeArea(.all)
     }
 }
 
