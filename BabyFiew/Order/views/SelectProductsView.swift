@@ -9,59 +9,57 @@ import SwiftUI
 
 struct SelectProductsView: View {
     @ObservedObject var viewModel: OrderViewModel
-//    @Binding var listSelect:[Bool]
-    @State var isChecked = false
     
     var body: some View {
-        VStack {
+        NavigationView {
             List {
-                Section(header: Text("DV goi")) {
-                    Toggle(isOn: $isChecked) {
-                        Text("Test checkbox")
+                Section(header: Text("Dịch vụ gói")) {
+                    ForEach(viewModel.services.lstServicePack.indexed(), id: \.1.id) {index, product in
+                        Toggle(isOn: self.$viewModel.services.lstServicePack[index].isOn) {
+                            Text(product.name)
+                        }
                     }
-                    .toggleStyle(CheckboxToggleStyle())
-                    
-                    Toggle(isOn: $isChecked) {
-                        Text("Test checkbox")
-                    }
-                    .toggleStyle(CheckboxToggleStyle())
-                    
-                    Toggle(isOn: $isChecked) {
-                        Text("Test checkbox")
-                    }
-                    .toggleStyle(CheckboxToggleStyle())
                 }
                 
-                Section(header: Text("DV goi")) {
-                    Toggle(isOn: $isChecked) {
-                        Text("Test checkbox")
+                Section(header: Text("Dịch vụ lẻ")) {
+                    ForEach(viewModel.services.lstServiceRetail.indexed(), id: \.1.id) {index, product in
+                        Toggle(isOn: self.$viewModel.services.lstServiceRetail[index].isOn) {
+                            Text(product.name)
+                        }
                     }
-                    .toggleStyle(CheckboxToggleStyle())
-                    
-                    Toggle(isOn: $isChecked) {
-                        Text("Test checkbox")
+                }
+                
+                Section(header: Text("Sản phẩm")) {
+                    ForEach(viewModel.services.lstProduct.indexed(), id: \.1.id) {index, product in
+                        Toggle(isOn: self.$viewModel.services.lstProduct[index].isOn) {
+                            Text(product.name)
+                        }
                     }
-                    .toggleStyle(CheckboxToggleStyle())
-                    
-                    Toggle(isOn: $isChecked) {
-                        Text("Test checkbox")
+                }
+                
+                Section(header: Text("Quà tặng")) {
+                    ForEach(viewModel.services.lstGift.indexed(), id: \.1.id) {index, product in
+                        Toggle(isOn: self.$viewModel.services.lstGift[index].isOn) {
+                            Text(product.name)
+                        }
                     }
-                    .toggleStyle(CheckboxToggleStyle())
                 }
             }
-            
-            Button(action: {
-                viewModel.showSelectProducts = false
-            }) {
-                Text("OK")
+            .listStyle(.sidebar)
+            .toggleStyle(CheckboxToggleStyle())
+            .toolbar {
+                ToolbarItem {
+                    Button("OK") {
+                        viewModel.showSelectProducts = false
+                    }
+                }
             }
-            .buttonStyle(NormalButton(width: 80))
         }
     }
 }
 
 struct SelectProductsView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectProductsView(viewModel: OrderViewModel())
+        SelectProductsView(viewModel: OrderViewModel(customerSearcher: SearcherMock(), orderServices: OrderMock()))
     }
 }

@@ -11,7 +11,7 @@ struct OrderView: View {
     @ObservedObject var viewModel: OrderViewModel
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack {
             HStack {
                 Spacer()
                 
@@ -36,13 +36,10 @@ struct OrderView: View {
                 }
             }
             
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Bố/mẹ: Oanh Kieu")
-                
-                Text("Bé: ")
-                
+            if let selectSearchCustomer = viewModel.selectSearchCustomer {
+                CustomerRowView(customerModel: selectSearchCustomer)
+                    .padding(.vertical, 10)
             }
-            .padding(.vertical, 10)
 
             HStack {
                 LabelIconView(systemName: "list.bullet", backgroundColor: "pinkmain", text: "Sản phẩm/dịch vụ")
@@ -53,21 +50,15 @@ struct OrderView: View {
             }
             
             List {
-                VStack(alignment: .leading) {
-                    Text("Gói bơi hồ nhỏ 10 buổi")
-
-                    Text("2.580.000")
-                        .foregroundColor(.green)
-                        .font(.subheadline)
-                    
-                }
-                VStack(alignment: .leading) {
-                    Text("Gói bơi hồ nhỏ 10 buổi")
+                ForEach(viewModel.services.servicesSelected){ product in
+                    VStack(alignment: .leading) {
+                        Text(product.name)
                         
-                    Text("2.580.000")
-                        .foregroundColor(.green)
-                        .font(.subheadline)
-                    
+                        Text("\(product.price)")
+                            .foregroundColor(.green)
+                            .font(.subheadline)
+                        
+                    }
                 }
             }
             .listStyle(.plain)
@@ -94,18 +85,21 @@ struct OrderView: View {
             .buttonStyle(NormalButton(width: 80))
             
         }
-        .padding()
+        .padding(.horizontal)
         .sheet(isPresented: $viewModel.showSelectProducts) {
             SelectProductsView(viewModel: viewModel)
         }
         .sheet(isPresented: $viewModel.showSearchCustomer) {
             SearchCustomerView(viewModel: viewModel)
         }
+        .onAppear {
+            viewModel.loadServices()
+        }
     }
 }
 
 struct OrderView_Previews: PreviewProvider {
     static var previews: some View {
-        OrderView(viewModel: OrderViewModel())
+        OrderView(viewModel: OrderViewModel(customerSearcher: SearcherMock(), orderServices: OrderMock()))
     }
 }

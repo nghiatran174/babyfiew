@@ -20,12 +20,15 @@ struct ContentView: View {
                     Label("Báo cáo", systemImage: "chart.xyaxis.line")
                 }
             
-            OrderView(viewModel: OrderViewModel())
+            OrderView(viewModel: OrderViewModel(
+                    customerSearcher: SearcherMock(),
+                    orderServices: OrderMock())
+                )
                 .tabItem {
                     Label("Tạo đơn", systemImage: "plus.app")
                 }
             
-            SearchView()
+            SearchView(viewModel: SearchViewModel(babySearcher: SearcherMock()))
                 .tabItem {
                     Label("Tìm kiếm", systemImage: "magnifyingglass")
                 }
