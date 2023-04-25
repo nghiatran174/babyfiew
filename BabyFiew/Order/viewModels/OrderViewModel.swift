@@ -11,33 +11,20 @@ protocol OrderFetcher {
     func fetchServices() async -> Service
 }
 
-@MainActor
 class OrderViewModel : ObservableObject {
     @Published var showSelectProducts: Bool = false
     @Published var showCreateCustomer: Bool = false
-    
     @Published var showSearchCustomer: Bool = false
-    @Published var searchText = ""
-    @Published var resultSearchCustomers: [Baby] = []
-    @Published var selectSearchCustomer: Baby?
     
     @Published var services = Service()
     
-    private let customerSearcher: Searcher
     private let orderServices: OrderFetcher
     
-    init(customerSearcher: Searcher, orderServices: OrderFetcher) {
-        self.customerSearcher = customerSearcher
+    init(orderServices: OrderFetcher) {
         self.orderServices = orderServices
     }
     
-    func search() {
-        Task {
-            resultSearchCustomers = await customerSearcher.searchBaby(by: "")
-        }
-    }
-    
-    func loadServices() {
+    @MainActor func loadServices() {
         Task {
             services = await orderServices.fetchServices()
         }

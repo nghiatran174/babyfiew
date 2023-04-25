@@ -9,6 +9,7 @@ import SwiftUI
 
 struct OrderView: View {
     @ObservedObject var viewModel: OrderViewModel
+    @ObservedObject var searchViewModel: SearchComponentViewModel
     
     var body: some View {
         VStack {
@@ -36,7 +37,7 @@ struct OrderView: View {
                 }
             }
             
-            if let selectSearchCustomer = viewModel.selectSearchCustomer {
+            if let selectSearchCustomer = searchViewModel.selectResultSearch {
                 CustomerRowView(customerModel: selectSearchCustomer)
                     .padding(.vertical, 10)
             }
@@ -90,7 +91,7 @@ struct OrderView: View {
             SelectProductsView(viewModel: viewModel)
         }
         .sheet(isPresented: $viewModel.showSearchCustomer) {
-            SearchCustomerView(viewModel: viewModel)
+            SearchCustomerView(viewModel: viewModel, searchViewModel: searchViewModel)
         }
         .onAppear {
             viewModel.loadServices()
@@ -100,6 +101,6 @@ struct OrderView: View {
 
 struct OrderView_Previews: PreviewProvider {
     static var previews: some View {
-        OrderView(viewModel: OrderViewModel(customerSearcher: SearcherMock(), orderServices: OrderMock()))
+        OrderView(viewModel: OrderViewModel( orderServices: OrderMock()), searchViewModel: SearchComponentViewModel(searcher: SearcherMock()))
     }
 }

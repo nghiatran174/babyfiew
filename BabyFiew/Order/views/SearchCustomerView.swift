@@ -10,24 +10,13 @@ import SwiftUI
 struct SearchCustomerView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel: OrderViewModel
+    @ObservedObject var searchViewModel: SearchComponentViewModel
     
     
     var body: some View {
         ZStack(alignment: .topLeading) {
             NavigationView {
-                List {
-                    ForEach(viewModel.resultSearchCustomers) { baby in
-                        ResultSearchRow(baby: baby)
-                            .onTapGesture {
-                                viewModel.selectSearchCustomer = baby
-                                dismiss()
-                            }
-                    }
-                }
-                //            .listStyle(.plain)
-                .onChange(of: viewModel.searchText) { _ in
-                    viewModel.search()
-                }
+                SearchComponentView(viewModel: searchViewModel) 
                 .toolbar {
                     ToolbarItem {
                         Button("Hủy"){
@@ -36,8 +25,6 @@ struct SearchCustomerView: View {
                     }
                 }
             }
-            .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Số điện thoại/ tên bố mẹ / tên bé")
-            
             
             VStack(alignment: .trailing) {
                 Spacer()
@@ -67,6 +54,6 @@ struct SearchCustomerView: View {
 
 struct SearchCustomerView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchCustomerView(viewModel: OrderViewModel(customerSearcher: SearcherMock(), orderServices: OrderMock()))
+        SearchCustomerView(viewModel: OrderViewModel( orderServices: OrderMock()), searchViewModel: SearchComponentViewModel(searcher: SearcherMock()))
     }
 }

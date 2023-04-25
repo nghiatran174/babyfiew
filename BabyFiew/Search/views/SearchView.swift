@@ -9,29 +9,19 @@ import SwiftUI
 
 struct SearchView: View {
     @ObservedObject var viewModel: SearchViewModel
+    @ObservedObject var searchViewModel: SearchComponentViewModel
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(viewModel.babies) { baby in
-                    NavigationLink {
-                        
-                    } label: {
-                        ResultSearchRow(baby: baby)
-                    }
-                }
-            }
-//            .listStyle(.plain)
-            .onChange(of: viewModel.searchText) { _ in
-                viewModel.search()
+            SearchComponentView(viewModel: searchViewModel) { baby in
+                Text("Hello \(baby.nickName)")
             }
         }
-        .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Số điện thoại/ tên bố mẹ / tên bé")
     }
 }
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView(viewModel: SearchViewModel(babySearcher: SearcherMock()))
+        SearchView(viewModel: SearchViewModel(), searchViewModel: SearchComponentViewModel(searcher: SearcherMock()))
     }
 }

@@ -60,6 +60,6 @@ struct SelectProductsView: View {
 
 struct SelectProductsView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectProductsView(viewModel: OrderViewModel(customerSearcher: SearcherMock(), orderServices: OrderMock()))
+        SelectProductsView(viewModel: OrderViewModel( orderServices: OrderMock()))
     }
 }
