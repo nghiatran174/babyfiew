@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
-            CalendarView()
+            CalendarView(viewModel: CalendarViewModel(), searchViewModel: SearchComponentViewModel(searcher: SearcherMock()))
                 .tabItem {
                     Label("Lịch", systemImage: "calendar")
                 }
