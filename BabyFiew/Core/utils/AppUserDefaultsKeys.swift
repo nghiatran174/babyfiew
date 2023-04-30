@@ -3,4 +3,6 @@ enum AppUserDefaultsKeys {
     static let refreshTokenExpiresAt = "refreshTokenExpiresAt"
     static let bearerAccessToken = "bearerAccessToken"
     static let bearerRefreshToken = "bearerRefreshToken"
+    
+    static let logged = "logged"
 }
