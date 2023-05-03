@@ -12,63 +12,55 @@ struct CalendarView: View {
     @ObservedObject var searchViewModel: SearchComponentViewModel
     
     var body: some View {
-        let days: [String] = ["T2","T3","T4","T5","T6","T7","CN"]
-        
         ZStack(alignment: .bottomTrailing) {
             VStack {
                 HStack {
-                    ForEach(days, id: \.self) {day in
+                    ForEach(viewModel.days, id: \.day) {weekday in
                         VStack(spacing: 10) {
-                            Text(day)
+                            Text(weekday.weekday)
                                 .font(.subheadline)
-                            Text("10")
+                            Text(String(weekday.day))
                                 .padding(5)
-                                .background(Color.green)
-                                .foregroundColor(.white)
+                                .frame(width: 35, height: 35)
+                                .background(viewModel.selectDay == weekday.day ? Color("pinkmain") : nil)
+                                .foregroundColor(viewModel.selectDay == weekday.day ? Color.white : nil)
                                 .cornerRadius(30)
                         }
                         .frame(maxWidth: .infinity)
+                        .onTapGesture {
+                            viewModel.selectDay = weekday.day
+                        }
+                        .onChange(of: viewModel.selectDay) { _ in
+                            viewModel.filterEvents()
+                        }
                     }
                 }
                 
                 List {
-                    HStack {
-                        Text("9:00")
-                            .padding(.horizontal, 15)
-                        VStack {
-                            HStack {
-                                Image(systemName: "person")
-                                VStack {
-                                    Text("Mia")
-                                    Text("Thong tin gi do")
+                    ForEach(viewModel.eventsOfSelectDay, id: \.date) { event in
+                        HStack {
+                            Text(event.getTime())
+                                .padding(.horizontal, 15)
+                            VStack {
+                                HStack {
+                                    Image(systemName: "person")
+                                    VStack {
+                                        Text(event.baby.nickName)
+                                        Text(event.note)
+                                    }
                                 }
+                                .padding(8)
+                                .background(viewModel.backgroundColorEvents.randomElement())
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
                             }
-                            .padding(8)
-                            .background(Color.green)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                        }
-                    }
-                    
-                    HStack {
-                        Text("9:00")
-                            .padding(.horizontal, 15)
-                        VStack {
-                            HStack {
-                                Image(systemName: "person")
-                                VStack {
-                                    Text("Mia")
-                                    Text("Thong tin gi do")
-                                }
-                            }
-                            .padding(8)
-                            .background(Color.green)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
                         }
                     }
                 }
                 .listStyle(.grouped)
+                .task {
+                    await viewModel.fetchEvents()
+                }
                 
                 Spacer()
             }
@@ -95,6 +87,6 @@ struct CalendarView: View {
 
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
-        CalendarView(viewModel: CalendarViewModel(), searchViewModel: SearchComponentViewModel(searcher: SearcherMock()))
+        CalendarView(viewModel: CalendarViewModel(calendarServices: CalendarServicesMock()), searchViewModel: SearchComponentViewModel(searcher: SearcherMock()))
     }
 }

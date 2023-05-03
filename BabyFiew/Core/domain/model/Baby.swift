@@ -19,9 +19,8 @@ struct Baby: Codable {
 
 extension Baby {
     init() {
-        id = 123
-        name = "Ten day du"
-        nickName = "nickname"
+        name = ""
+        nickName = ""
         parent = Customer()
         gender = .male
     }

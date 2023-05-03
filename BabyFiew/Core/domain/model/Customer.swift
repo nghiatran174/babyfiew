@@ -16,9 +16,8 @@ struct Customer: Codable {
 
 extension Customer {
     init() {
-        id = 123
-        name = "Ten be me"
-        phone = "123123123"
+        name = ""
+        phone = ""
         gender = .female
     }
 }

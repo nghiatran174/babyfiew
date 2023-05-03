@@ -18,7 +18,7 @@ struct ContentView: View {
             }
             
             TabView {
-                CalendarView(viewModel: CalendarViewModel(), searchViewModel: SearchComponentViewModel(searcher: SearcherMock()))
+                CalendarView(viewModel: CalendarViewModel(calendarServices: CalendarServicesMock()), searchViewModel: SearchComponentViewModel(searcher: SearcherMock()))
                     .tabItem {
                         Label("Lịch", systemImage: "calendar")
                     }
