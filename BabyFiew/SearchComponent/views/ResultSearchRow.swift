@@ -31,6 +31,6 @@ struct ResultSearchRow: View {
 
 struct ResultSearchRow_Previews: PreviewProvider {
     static var previews: some View {
-        ResultSearchRow(baby: Baby(id: 123, name: "Ten day du", nickName: "nickname", parent: Customer(id: 123, name: "Ten bo me", phone: "098123712", gender: .male), gender: .female, avatar: nil))
+        ResultSearchRow(baby: Baby.mock[0])
     }
 }

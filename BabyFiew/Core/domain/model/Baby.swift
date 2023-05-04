@@ -11,8 +11,8 @@ struct Baby: Codable {
     var id: Int?
     var name: String
     var nickName: String
-    var dateOfBirth: Date?
-    let parent: Customer
+    var dateOfBirth: Date
+    var parent: Customer
     var gender: Gender
     var avatar: String?
 }
@@ -21,6 +21,7 @@ extension Baby {
     init() {
         name = ""
         nickName = ""
+        dateOfBirth = Date()
         parent = Customer()
         gender = .male
     }

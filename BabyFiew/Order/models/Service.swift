@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Service {
+struct Service: Codable {
     var lstProduct: [Product]
     var lstServicePack: [Product]
     var lstServiceRetail: [Product]
@@ -36,5 +36,13 @@ extension Service {
         self.lstServicePack = []
         self.lstServiceRetail = []
         self.lstGift = []
+    }
+}
+
+extension Service {
+    var sumPrice: Double {
+        servicesSelected.reduce(0) { partialResult, product in
+            partialResult + product.price
+        }
     }
 }

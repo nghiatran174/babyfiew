@@ -37,8 +37,8 @@ struct OrderView: View {
                 }
             }
             
-            if let selectSearchCustomer = searchViewModel.selectResultSearch {
-                CustomerRowView(customerModel: selectSearchCustomer)
+            if let customerSelected = viewModel.customerSelected {
+                CustomerRowView(customerModel: customerSelected)
                     .padding(.vertical, 10)
             }
 
@@ -67,20 +67,23 @@ struct OrderView: View {
             HStack(alignment: .bottom) {
                 Spacer()
                 Text("Thành tiền: ")
-                Text("2.580.000")
+                Text("\(viewModel.totalBill)")
                     .font(.title2)
                     .bold()
             }
             
             HStack(spacing: 50) {
                 Spacer()
-                Button("Lưu"){
-                    
+                Button(viewModel.saveButtonTitle){
+                    viewModel.saveOrder()
                 }
+                .disabled(viewModel.saveButtonDisabled)
                 
                 Button("In") {
                     
                 }
+                .disabled(true)
+
                 Spacer()
             }
             .buttonStyle(NormalButton(width: 80))
@@ -90,7 +93,11 @@ struct OrderView: View {
         .sheet(isPresented: $viewModel.showSelectProducts) {
             SelectProductsView(viewModel: viewModel)
         }
-        .sheet(isPresented: $viewModel.showSearchCustomer) {
+        .sheet(isPresented: $viewModel.showSearchCustomer, onDismiss: {
+            if let customerSelected = searchViewModel.selectResultSearch {
+                viewModel.customerSelected = customerSelected
+            }
+        }) {
             SearchCustomerView(viewModel: viewModel, searchViewModel: searchViewModel)
         }
         .onAppear {

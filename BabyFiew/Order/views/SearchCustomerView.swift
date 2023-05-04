@@ -46,8 +46,13 @@ struct SearchCustomerView: View {
                 .padding()
             }
         }
-        .sheet(isPresented: $viewModel.showCreateCustomer) {
-            CreateCustomerView(showView: $viewModel.showCreateCustomer)
+        .sheet(isPresented: $viewModel.showCreateCustomer, onDismiss: {
+            if let _ = viewModel.newBaby.id {
+                searchViewModel.selectResultSearch = viewModel.newBaby
+                dismiss()
+            }
+        }) {
+            CreateCustomerView(viewModel: viewModel)
         }
     }
 }

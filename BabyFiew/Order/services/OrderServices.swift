@@ -7,8 +7,28 @@
 
 import Foundation
 
-//struct OrderServices: OrderFetcher {
-//    func fetchServices() async -> Service {
-//        <#code#>
-//    }
-//}
+struct OrderServices: OrderFetcher {
+    private let requestManager: RequestManagerProtocol
+    
+    init(requestManager: RequestManagerProtocol) {
+        self.requestManager = requestManager
+    }
+    
+    func fetchServices() async throws -> Service {
+        let requestData = ServicesRequest.getServices
+        let service: Service = try await requestManager.perform(requestData)
+        return service
+    }
+    
+    func addCustomer(baby: Baby) async throws -> Baby {
+        let requestData = BabiesRequest.addBaby(baby: baby)
+        let baby: Baby = try await requestManager.perform(requestData)
+        return baby
+    }
+    
+    func saveOrder(customer: Customer, services: [Product], totalBill: Double) async throws -> Bool {
+        let requestData = OrdersRequest.addOrder(idCustomer: customer.id!, services: services, totalBill: totalBill)
+        let result: Bool = try await requestManager.perform(requestData)
+        return result
+    }
+}
