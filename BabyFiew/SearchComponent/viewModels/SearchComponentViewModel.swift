@@ -7,6 +7,10 @@
 
 import Foundation
 
+protocol Searcher {
+    func searchBaby(by text: String) async throws -> [Baby]
+}
+
 class SearchComponentViewModel : ObservableObject {
     @Published var searchText = ""
     @Published var listResultSearch: [Baby] = []
@@ -20,7 +24,11 @@ class SearchComponentViewModel : ObservableObject {
     
     @MainActor func search() {
         Task {
-            listResultSearch = await searcher.searchBaby(by: "")
+            do {
+                listResultSearch = try await searcher.searchBaby(by: searchText)
+            } catch {
+                print(error)
+            }
         }
     }
 }

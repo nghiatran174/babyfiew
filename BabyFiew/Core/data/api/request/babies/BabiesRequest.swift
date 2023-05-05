@@ -9,19 +9,36 @@ import Foundation
 
 enum BabiesRequest: RequestProtocol {
     case addBaby(baby: Baby)
+    case search(text: String)
     
     var path: String {
-        "/babies"
+        return "/babies"
     }
     
     var requestType: RequestType {
-        .POST
+        switch self {
+        case .addBaby(_):
+            return .POST
+        default:
+            return .GET
+        }
     }
     
     var params: [String : Any] {
         switch self {
         case .addBaby(let baby):
             return ["baby": baby]
+        default:
+            return [:]
         }    
+    }
+    
+    var urlParams: [String : String?] {
+        switch self {
+        case let .search(text):
+            return ["search": text]
+        default:
+            return [:]
+        }
     }
 }
