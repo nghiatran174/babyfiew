@@ -11,7 +11,7 @@ enum OrdersRequest: RequestProtocol {
     case addOrder(idCustomer: Int, services: [Product], totalBill: Double)
     
     var path: String {
-        "/orders"
+        "/api/orders"
     }
     
     var requestType: RequestType {

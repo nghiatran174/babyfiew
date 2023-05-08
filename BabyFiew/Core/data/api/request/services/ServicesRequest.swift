@@ -11,7 +11,7 @@ enum ServicesRequest: RequestProtocol {
     case getServices
     
     var path: String {
-        "/services"
+        "/api/services"
     }
     
     var requestType: RequestType  {

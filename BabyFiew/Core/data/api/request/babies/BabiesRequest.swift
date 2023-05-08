@@ -12,7 +12,7 @@ enum BabiesRequest: RequestProtocol {
     case search(text: String)
     
     var path: String {
-        return "/babies"
+        "/api/babies"
     }
     
     var requestType: RequestType {

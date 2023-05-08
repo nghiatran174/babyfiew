@@ -12,7 +12,7 @@ enum EventsRequest: RequestProtocol {
     case addEvent(_ event: Event)
     
     var path: String {
-        "/events"
+        "/api/events"
     }
     
     var params: [String : Any] {

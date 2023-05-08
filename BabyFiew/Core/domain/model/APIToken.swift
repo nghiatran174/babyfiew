@@ -26,7 +26,7 @@ extension APIToken {
     }
     
     var refreshTokenExpiresAt: Date {
-        Calendar.current.date(byAdding: .second, value: refreshTokenExpiresIn ?? 0, to: requestedAt) ?? Date()
+        Calendar.current.date(byAdding: .day, value: refreshTokenExpiresIn ?? 0, to: requestedAt) ?? Date()
     }
 
     var bearerAccessToken: String {
