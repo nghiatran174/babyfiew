@@ -13,7 +13,7 @@ enum AuthTokenRequest: RequestProtocol {
           params["password"] = password
           return params
       case let .refresh(refreshToken):
-          return ["refresh_token": refreshToken]
+          return ["refreshToken": refreshToken]
       }
   }
 

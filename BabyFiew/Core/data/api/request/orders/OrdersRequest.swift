@@ -22,7 +22,7 @@ enum OrdersRequest: RequestProtocol {
         switch self {
         case let .addOrder(idCustomer, services, totalBill):
             return ["idCustomer": idCustomer,
-                    "servives": services,
+                    "lstProductBill": services,
                     "totalBill": totalBill
             ]
         }

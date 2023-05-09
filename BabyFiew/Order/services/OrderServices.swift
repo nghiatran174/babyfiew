@@ -26,9 +26,9 @@ struct OrderServices: OrderFetcher {
         return baby
     }
     
-    func saveOrder(customer: Customer, services: [Product], totalBill: Double) async throws -> Bool {
+    func saveOrder(customer: Customer, services: [Product], totalBill: Double) async throws -> Int {
         let requestData = OrdersRequest.addOrder(idCustomer: customer.id!, services: services, totalBill: totalBill)
-        let result: Bool = try await requestManager.perform(requestData)
-        return result
+        let idOrder: Int = try await requestManager.perform(requestData)
+        return idOrder
     }
 }

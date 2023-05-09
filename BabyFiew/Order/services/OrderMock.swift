@@ -19,7 +19,7 @@ struct OrderMock: OrderFetcher {
         Service.mock
     }
     
-    func saveOrder(customer: Customer, services: [Product], totalBill: Double) async throws -> Bool {
-        true
+    func saveOrder(customer: Customer, services: [Product], totalBill: Double) async throws -> Int {
+        100
     }
 }

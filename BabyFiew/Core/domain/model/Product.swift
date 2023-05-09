@@ -13,5 +13,6 @@ struct Product: Codable, Identifiable {
     var price: Double
     var type: ProductType
     var quantityProcess: Int
+    var idServicePack: Int?
     var isOn = false
 }

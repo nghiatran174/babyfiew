@@ -10,7 +10,7 @@ import Foundation
 protocol OrderFetcher {
     func fetchServices() async throws -> Service
     func addCustomer(baby: Baby) async throws -> Baby
-    func saveOrder(customer: Customer, services: [Product], totalBill: Double) async throws -> Bool
+    func saveOrder(customer: Customer, services: [Product], totalBill: Double) async throws -> Int
 }
 
 class OrderViewModel : ObservableObject {
@@ -76,8 +76,8 @@ class OrderViewModel : ObservableObject {
     func saveOrder() {
         Task {
             do {
-                let result = try await orderServices.saveOrder(customer: customerSelected!.parent, services: services.servicesSelected, totalBill: totalBill)
-                if result == true {
+                let idOrder = try await orderServices.saveOrder(customer: customerSelected!.parent, services: services.servicesSelected, totalBill: totalBill)
+                if idOrder > 0 {
                     saveButtonTitle = "Đã lưu"
                     saveButtonDisabled.toggle()
                 }
