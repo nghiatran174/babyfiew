@@ -21,8 +21,9 @@ struct CreateCustomerView: View {
                     TextField("Tên bé", text: $viewModel.newBaby.name)
                     TextField("Biệt danh bé", text: $viewModel.newBaby.nickName)
                     Picker("Giới tính", selection: $viewModel.newBaby.gender) {
-                        Text(Gender.male.rawValue).tag(Gender.male)
-                        Text(Gender.female.rawValue).tag(Gender.female)
+                        ForEach(Gender.allCases, id: \.self) { gender in
+                            Text(gender.displayText)
+                        }
                     }
                     .pickerStyle(.menu)
                     DatePicker("Ngày sinh", selection: $viewModel.newBaby.dateOfBirth,displayedComponents: [.date])

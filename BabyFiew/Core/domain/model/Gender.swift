@@ -7,7 +7,16 @@
 
 import Foundation
 
-enum Gender: String, Codable {
+enum Gender: String, Codable, CaseIterable {
     case female
     case male
+    
+    var displayText: String {
+        switch self {
+        case .female:
+            return "Nữ"
+        case .male:
+            return "Nam"
+        }
+    }
 }
